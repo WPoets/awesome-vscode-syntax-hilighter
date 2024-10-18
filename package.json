@@ -1,0 +1,54 @@
+{
+  "name": "awesomeenterprise-extension",
+  "displayName": "AwesomeEnterprise Extension",
+  "description": "Syntax highlighting and typeahead for AwesomeEnterprise, HTML, CSS, JavaScript, and SQL",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "awesomeenterprise",
+        "aliases": [
+          "AwesomeEnterprise",
+          "ae"
+        ],
+        "extensions": [
+          ".module.html"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "awesomeenterprise",
+        "scopeName": "source.awesomeenterprise",
+        "path": "./syntaxes/awesomeenterprise.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "AwesomeEnterprise Monokai",
+        "uiTheme": "vs-dark",
+        "path": "./themes/awesomeenterprise-monokai-color-theme.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:awesomeenterprise"
+  ],
+  "main": "./extension.js",
+  "devDependencies": {
+    "@types/vscode": "^1.94.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

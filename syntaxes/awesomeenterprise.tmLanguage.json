@@ -1,0 +1,239 @@
+{
+  "name": "AwesomeEnterprise",
+  "scopeName": "source.awesomeenterprise",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#mysqli-shortcodes" },
+    { "include": "#shortcodes" },
+    { "include": "#strings" },
+    { "include": "#variables" },
+    { "include": "#html" },
+    { "include": "#css" },
+    { "include": "#javascript" },
+    { "include": "#sql" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.awesomeenterprise",
+          "begin": "/\\*\\*",
+          "end": "\\*\\*/"
+        },
+        {
+          "name": "comment.line.double-slash.awesomeenterprise",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "mysqli-shortcodes": {
+      "patterns": [
+        {
+          "name": "meta.mysqli.shortcode.block.awesomeenterprise",
+          "begin": "\\[(mysqli\\.[\\w.]+)\\b",
+          "beginCaptures": {
+            "1": { "name": "entity.name.function.mysqli.awesomeenterprise" }
+          },
+          "end": "\\[/(\\1)\\]",
+          "endCaptures": {
+            "1": { "name": "entity.name.function.mysqli.awesomeenterprise" }
+          },
+          "patterns": [
+            { "include": "#shortcode-attributes" },
+            { "include": "#sql" }
+          ]
+        }
+      ]
+    },
+    "shortcodes": {
+      "patterns": [
+        {
+          "name": "meta.shortcode.awesomeenterprise",
+          "begin": "\\[(\\w+(\\.\\w+)*)\\b",
+          "beginCaptures": {
+            "1": { "name": "entity.name.function.awesomeenterprise" }
+          },
+          "end": "\\]",
+          "patterns": [{ "include": "#shortcode-attributes" }]
+        },
+        {
+          "name": "meta.shortcode.block.awesomeenterprise",
+          "begin": "\\[(\\w+(\\.\\w+)*)\\b",
+          "beginCaptures": {
+            "1": { "name": "entity.name.function.awesomeenterprise" }
+          },
+          "end": "\\[/(\\1)\\]",
+          "endCaptures": {
+            "1": { "name": "entity.name.function.awesomeenterprise" }
+          },
+          "patterns": [
+            { "include": "#shortcode-attributes" },
+            { "include": "$self" }
+          ]
+        }
+      ]
+    },
+    "shortcode-attributes": {
+      "patterns": [
+        {
+          "name": "entity.other.attribute-name.awesomeenterprise",
+          "match": "\\b([a-zA-Z\\-_]+)\\s*="
+        },
+        { "include": "#strings" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.awesomeenterprise",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "string.quoted.double.awesomeenterprise",
+          "begin": "\"",
+          "end": "\""
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.awesomeenterprise",
+          "match": "\\{([^\\}]+)\\}",
+          "captures": {
+            "1": { "name": "variable.other.awesomeenterprise" }
+          }
+        }
+      ]
+    },
+    "html": {
+      "patterns": [
+        {
+          "begin": "(<)((?i:style))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.style.html" }
+          },
+          "end": "(</)((?i:style))(>)",
+          "endCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.style.html" },
+            "3": { "name": "punctuation.definition.tag.end.html" }
+          },
+          "name": "source.css.embedded.html",
+          "patterns": [
+            { "include": "#tag-stuff" },
+            {
+              "begin": "(>)",
+              "beginCaptures": {
+                "1": { "name": "punctuation.definition.tag.end.html" }
+              },
+              "end": "(?=</(?i:style))",
+              "patterns": [{ "include": "source.css" }]
+            }
+          ]
+        },
+        {
+          "begin": "(<)((?i:script))\\b(?![^>]*/>)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.script.html" }
+          },
+          "end": "(</)((?i:script))(>)",
+          "endCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.script.html" },
+            "3": { "name": "punctuation.definition.tag.end.html" }
+          },
+          "name": "source.js.embedded.html",
+          "patterns": [
+            { "include": "#tag-stuff" },
+            {
+              "begin": "(>)",
+              "beginCaptures": {
+                "1": { "name": "punctuation.definition.tag.end.html" }
+              },
+              "end": "(?=</(?i:script))",
+              "patterns": [{ "include": "source.js" }]
+            }
+          ]
+        },
+        {
+          "begin": "(<)([a-zA-Z0-9:-]+)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.html" }
+          },
+          "end": "(>)",
+          "endCaptures": {
+            "1": { "name": "punctuation.definition.tag.end.html" }
+          },
+          "name": "meta.tag.any.html",
+          "patterns": [{ "include": "#tag-stuff" }]
+        },
+        {
+          "begin": "(</)(\\w+)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.html" },
+            "2": { "name": "entity.name.tag.html" }
+          },
+          "end": "(>)",
+          "endCaptures": {
+            "1": { "name": "punctuation.definition.tag.end.html" }
+          },
+          "name": "meta.tag.any.html"
+        }
+      ]
+    },
+    "css": {
+      "patterns": [{ "include": "source.css" }]
+    },
+    "javascript": {
+      "patterns": [{ "include": "source.js" }]
+    },
+    "sql": {
+      "patterns": [
+        {
+          "name": "keyword.other.sql",
+          "match": "\\b(SELECT|FROM|WHERE|AND|OR|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|ALTER|DROP|INDEX|JOIN|LEFT|RIGHT|INNER|OUTER|UNION|GROUP BY|ORDER BY|HAVING|LIMIT|OFFSET|AS|ON|DISTINCT|COUNT|SUM|AVG|MAX|MIN)\\b"
+        },
+        {
+          "name": "constant.numeric.sql",
+          "match": "\\b[0-9]+\\b"
+        },
+        {
+          "name": "string.quoted.single.sql",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "string.quoted.double.sql",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "constant.language.sql",
+          "match": "\\b(TRUE|FALSE|NULL)\\b"
+        },
+        {
+          "name": "support.function.sql",
+          "match": "\\b(AVG|COUNT|FIRST|LAST|MAX|MIN|SUM|UCASE|LCASE|MID|LEN|ROUND|NOW|FORMAT)\\s*\\("
+        },
+        {
+          "name": "variable.other.sql",
+          "match": "@[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "tag-stuff": {
+      "patterns": [
+        {
+          "name": "entity.other.attribute-name.html",
+          "match": "\\b([a-zA-Z\\-:]+)"
+        },
+        { "include": "#strings" }
+      ]
+    }
+  }
+}
